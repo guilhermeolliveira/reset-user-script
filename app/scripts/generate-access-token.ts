@@ -1,21 +1,15 @@
 import { api } from "../lib/axios";
+import { getEnv } from "../lib/env";
 
-interface AccessTokenParams {
-  client_id: string;
-  client_secret: string;
-}
-
-export async function generateAccessToken({
-  client_id,
-  client_secret,
-}: AccessTokenParams) {
-  const endpoint = process.env.AUTH_ENDPOINT;
+export async function generateAccessToken() {
+  const env = getEnv();
+  const endpoint = env.AUTH_ENDPOINT;
 
   if (!endpoint) {
     throw new Error("process.env.AUTH_ENDPOINT is not set");
   }
 
-  const authStr = [client_id, client_secret].join(":");
+  const authStr = [env.CLIENT_ID, env.CLIENT_SECRET].join(":");
   const authBase64 = Buffer.from(authStr).toString("base64");
 
   const formData = new URLSearchParams();

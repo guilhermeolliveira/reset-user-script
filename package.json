@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx main.ts"
+    "start": "tsx app/_index.ts",
+    "dev": "NODE_ENV=development tsx app/_index.ts",
+    "prod": "NODE_ENV=production tsx app/_index.ts",
+    "stg": "NODE_ENV=staging tsx app/_index.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,9 +15,12 @@
   "packageManager": "pnpm@10.17.1",
   "dependencies": {
     "axios": "^1.13.2",
-    "csv-parser": "^3.2.0"
+    "csv-parser": "^3.2.0",
+    "inquirer": "^13.0.2",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@types/inquirer": "^9.0.9",
     "@types/node": "^25.0.0",
     "dotenv": "^17.2.3",
     "tsx": "^4.21.0",
