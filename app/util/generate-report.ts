@@ -52,9 +52,12 @@ export function printReportSummary(
   const successes = results.filter((r) => r.status === "success");
   const errors = results.filter((r) => r.status === "error");
 
-  const successCount = String(successes.length);
-  const errorCount = String(errors.length);
-  const totalCount = String(results.length);
+  const uniqueSuccesses = new Set(successes.map((r) => r.email));
+  const uniqueErrors = new Set(errors.map((r) => r.email));
+
+  const successCount = String(uniqueSuccesses.size);
+  const errorCount = String(uniqueErrors.size);
+  const totalCount = String(uniqueSuccesses.size + uniqueErrors.size);
 
   console.log("\n╔═══════════════════════════════════════╗");
   console.log("║          📊 RELATÓRIO FINAL           ║");
@@ -63,7 +66,7 @@ export function printReportSummary(
   console.log(`║ Erros:    ${errorCount.padStart(27)} ║`);
   console.log(`║ Total:    ${totalCount.padStart(27)} ║`);
   console.log("╚═══════════════════════════════════════╝\n");
-  console.log(`📄 Relatório gerado: ${filePath}\n`);
+  console.log(`📄 Detalhes do relatório: ${filePath}\n`);
 
   if (errors.length > 0) {
     console.log("❌ Erros encontrados:");

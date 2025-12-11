@@ -4,16 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsx app/_index.ts",
-    "dev": "NODE_ENV=development tsx app/_index.ts",
-    "prod": "NODE_ENV=production tsx app/_index.ts",
-    "stg": "NODE_ENV=staging tsx app/_index.ts"
+    "create": "tsx app/_create_users.ts",
+    "reset": "tsx app/_reset-password.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.17.1",
   "dependencies": {
+    "@faker-js/faker": "^10.1.0",
     "axios": "^1.13.2",
     "csv-parse": "^6.1.0",
     "csv-parser": "^3.2.0",

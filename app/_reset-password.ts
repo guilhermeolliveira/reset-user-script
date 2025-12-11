@@ -88,7 +88,9 @@ export async function main() {
     console.log(`\n✓ ${emails.length} e-mail(s) informado(s)\n`);
   }
 
-  const env = loadEnv(answers.environment, answers.site);
+  emails = emails.sort((a, b) => a.localeCompare(b));
+
+  loadEnv(answers.environment, answers.site);
 
   console.log("╔═══════════════════════════════════════╗");
   console.log(`║ 🔧 Ambiente: ${answers.environment.padEnd(23)}║`);
