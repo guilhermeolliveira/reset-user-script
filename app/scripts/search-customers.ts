@@ -24,11 +24,7 @@ export async function searchCustomers(emails: string[], access_token: string) {
   const chunks = chunkArray(emails, 200);
   const allResults: Record<string, SearchCustomersResult> = {};
 
-  console.log(`\n┌${"─".repeat(50)}┐`);
-  console.log(`│ 🔍 ${"BUSCAR CLIENTES".padEnd(46)}│`);
-  console.log(`│ 📊 Total: ${String(emails.length).padEnd(39)}│`);
-  console.log(`│ 📦 Lotes: ${String(chunks.length).padEnd(39)}│`);
-  console.log(`└${"─".repeat(50)}┘\n`);
+  console.log(`Searching ${emails.length} customers in ${chunks.length} batches\n`);
 
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
@@ -72,18 +68,13 @@ export async function searchCustomers(emails: string[], access_token: string) {
 
       const elapsed = Date.now() - startTime;
       const foundCount = Object.values(chunkResults).filter(r => r.status === "success").length;
-      console.log(`  ✓ Lote ${i + 1}/${chunks.length} - ${chunk.length} itens (${foundCount} encontrados) (${elapsed}ms)`);
-
+      console.log(`Batch request completed: ${i + 1}/${chunks.length} - (${elapsed}ms) - ${foundCount} found`);
     } catch (error) {
       const elapsed = Date.now() - startTime;
-      console.error(`  ✗ Lote ${i + 1}/${chunks.length} - FALHOU (${elapsed}ms)`);
-      if (error instanceof Error) {
-        console.error(`     Erro: ${error.message}`);
-      }
+      console.error(`Batch request failed: ${i + 1}/${chunks.length} - (${elapsed}ms)`);
       throw error;
     }
   }
-  console.log();
 
   return allResults;
 }

@@ -27,11 +27,7 @@ export async function batchRequest<Request>({
   const chunks = chunkArray(data, 50);
   const responses: string[] = [];
 
-  console.log(`\n┌${"─".repeat(50)}┐`);
-  console.log(`│ 🚀 ${service_name.toUpperCase().padEnd(46)}│`);
-  console.log(`│ 📊 Total: ${String(data.length).padEnd(39)}│`);
-  console.log(`│ 📦 Lotes: ${String(chunks.length).padEnd(39)}│`);
-  console.log(`└${"─".repeat(50)}┘\n`);
+  console.log(`Making batch request to ${service_name} with ${data.length} items in ${chunks.length} batches\n`);
 
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
@@ -55,18 +51,13 @@ export async function batchRequest<Request>({
 
       const elapsed = Date.now() - startTime;
       responses.push(response.data as string);
-      console.log(`  ✓ Lote ${i + 1}/${chunks.length} - ${chunk.length} itens (${elapsed}ms)`);
-
+      console.log(`Batch request completed: ${i + 1}/${chunks.length} - (${elapsed}ms)`);
     } catch (error) {
       const elapsed = Date.now() - startTime;
-      console.error(`  ✗ Lote ${i + 1}/${chunks.length} - FALHOU (${elapsed}ms)`);
-      if (error instanceof Error) {
-        console.error(`     Erro: ${error.message}`);
-      }
+      console.error(`Batch request failed: ${i + 1}/${chunks.length} - (${elapsed}ms)`);
       throw error;
     }
   }
-  console.log();
 
   return responses.join('\n');
 }
